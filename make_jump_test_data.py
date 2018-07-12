@@ -177,10 +177,10 @@ class JumpTestData:
                     if n == 47:
                         dm.groupdq[0, n, mid_rows:, mid_cols:] = 4
 
-            elif self.mode == 2:
+            elif self.mode == 3:
                 for n in range(ngroups):
-                    if n == 2:
-                        dm.groupdq[0, n, mid_rows:, :] = 4
+                    if n == 1:
+                        dm.groupdq[0, n, :, mid_cols:] = 4
 
             dm.save(self.jump_file)
 
