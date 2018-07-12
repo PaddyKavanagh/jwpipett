@@ -146,7 +146,6 @@ class RampFits:
 
         plt.tight_layout()
         plot_name = 'pixel_mask_histogram.pdf'
-        plt.tight_layout()
         try:
             os.remove(plot_name)
         except:
@@ -192,7 +191,6 @@ class RampFits:
         except:
             pass
         fig.savefig(plot_name, dpi=100)
-        plt.show()
 
     def plot_all(self):
         """
