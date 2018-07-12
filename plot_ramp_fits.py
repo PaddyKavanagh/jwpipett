@@ -108,12 +108,11 @@ class RampFits:
         my_slopes_fitopt = self.fitopt_dm.slope[:, :, self.ylim[0]:self.ylim[1], self.xlim[0]:self.xlim[1]]
         my_slopes_rate = self.rate_dm.data[self.ylim[0]:self.ylim[1], self.xlim[0]:self.xlim[1]]
 
-        bin_edges = np.arange(-0.05, 5, 0.1)
+        n, bins, patches = axs.hist(my_slopes_fitopt.ravel(), bins='auto', alpha=0.5, histtype='bar', ec='black',
+                                    color='g', label='fitopt.fits')
+        axs.hist(my_slopes_rate.ravel(), bins=bins, alpha=0.5, histtype='bar', ec='black',
+                 color='b', label='rate.fits')
 
-        axs.hist(my_slopes_rate.ravel(), bins=bin_edges, alpha=0.5, histtype='bar', ec='black', color='b',
-                 label='rate.fits')
-        axs.hist(my_slopes_fitopt.ravel(), bins=bin_edges, alpha=0.5, histtype='bar', ec='black', color='g',
-                 label='fitopt.fits')
         axs.legend(prop={'size': 10}, loc=0)
         axs.grid(True, linewidth=0.5)
 
@@ -158,14 +157,14 @@ class RampFits:
         """
         use the RampPlots class to plot the ramps in the jump output
         """
-        my_ramps = RampPlots(self.ramp_dm)
+        my_ramps = RampPlots(self.ramp_dm, xlim=self.xlim, ylim=self.ylim)
         my_ramps.plot_ramps()
 
     def plot_groupdq(self):
         """
         use the RampPlots class to plot the groupdq from the jump output
         """
-        my_ramps = RampPlots(self.ramp_dm)
+        my_ramps = RampPlots(self.ramp_dm, xlim=self.xlim, ylim=self.ylim)
         my_ramps.plot_groupdq()
 
     def plot_all(self):
