@@ -148,7 +148,7 @@ class JumpTestData:
         bottom right quadrant:   jump at group 47 (before second last frame - segment with only 1 group)
 
         MODE 3=======================================
-        all:      all have jump at group 2
+        all:      one half has jump at group 2
         """
 
         with datamodels.MIRIRampModel(self.jump_file) as dm:
@@ -180,7 +180,7 @@ class JumpTestData:
             elif self.mode == 2:
                 for n in range(ngroups):
                     if n == 2:
-                        dm.groupdq[0, n, :, :] = 4
+                        dm.groupdq[0, n, mid_rows:, :] = 4
 
             dm.save(self.jump_file)
 
