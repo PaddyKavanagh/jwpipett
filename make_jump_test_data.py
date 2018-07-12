@@ -126,6 +126,9 @@ class JumpTestData:
                                       'ramp_fit': {'skip': True}})
 
         self.jump_file = os.path.join(self.output_dir, 'step_refpix.fits')
+        better_name = os.path.join(self.output_dir, 'jump_file.fits')
+        shutil.move(self.jump_file, better_name)
+        self.jump_file = better_name
 
     def set_jump_flags(self):
         """
