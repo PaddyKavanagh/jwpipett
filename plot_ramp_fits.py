@@ -167,6 +167,33 @@ class RampFits:
         my_ramps = RampPlots(self.ramp_dm, xlim=self.xlim, ylim=self.ylim)
         my_ramps.plot_groupdq()
 
+    def plot_jump_pixels(self):
+        """
+        plot the pixels with a jump flagged
+        """
+        my_slopes_rate = self.rate_dm.data[self.ylim[0]:self.ylim[1], self.xlim[0]:self.xlim[1]]
+        my_gdqs = self.ramp_dm.groupdq[0, :, self.ylim[0]:self.ylim[1], self.xlim[0]:self.xlim[1]]
+        my_gdqs_image = np.sum(my_gdqs, axis=0)
+
+        fig, axs = plt.subplots(1, 2, figsize=(12, 8))
+
+        axs[0].imshow(my_slopes_rate, cmap='jet', interpolation='nearest', origin='lower')
+        axs[1].imshow(my_gdqs_image, cmap='gray', interpolation='nearest', origin='lower', vmin=2, vmax=5)
+
+        axs[0].annotate('rate image', xy=(0.03, 0.97), xycoords='axes fraction', fontsize=12, fontweight='bold',
+                        color='w')
+        axs[1].annotate('group_dq summed', xy=(0.03, 0.97), xycoords='axes fraction', fontsize=12,
+                        fontweight='bold', color='w')
+
+        plt.tight_layout()
+        plot_name = 'rate_and_jump_images.pdf'
+        try:
+            os.remove(plot_name)
+        except:
+            pass
+        fig.savefig(plot_name, dpi=100)
+        plt.show()
+
     def plot_all(self):
         """
         run all plot methods
@@ -176,6 +203,7 @@ class RampFits:
         self.plot_pixeldq()
         self.plot_ramps()
         self.plot_groupdq()
+        self.plot_jump_pixels()
 
 
 if __name__ == "__main__":
