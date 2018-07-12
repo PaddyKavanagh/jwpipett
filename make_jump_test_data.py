@@ -44,10 +44,11 @@ class JumpTestData:
         the location to save the simulated and pipelined output
 
     """
-    def __init__(self, noise=True, output_dir='jump_test_data'):
+    def __init__(self, noise=True, output_dir='jump_test_data', mode=1):
 
         self.output_dir = output_dir
         self.noise = noise
+        self.mode = mode
 
         self.sim_file = None
         self.jump_file = None
@@ -134,12 +135,21 @@ class JumpTestData:
         """
         manually set the jump flags. We want to set:
 
+        MODE 1=======================================
         top left quadrant:      no jumps
         top right quadrant:     jump at group 2  (after first frame)
         bottom left quadrant:   jump at group 24 (midpoint)
         bottom right quadrant:   jump at group 48 (before last frame)
+
+        MODE 2=======================================
+        top left quadrant:      jump at group 3  (after second frame - segment with only 1 group)
+        top right quadrant:     jump at group 4  (after third frame - segment with 2 groups)
+        bottom left quadrant:   jump at group 46 (before second last frame - segment with 2 groups)
+        bottom right quadrant:   jump at group 47 (before second last frame - segment with only 1 group)
+
+        MODE 3=======================================
+        all:      all have jump at group 2
         """
-        self.jump_file = os.path.join(self.output_dir, 'step_refpix.fits')  # pipeline output naming is not working
 
         with datamodels.MIRIRampModel(self.jump_file) as dm:
 
@@ -147,13 +157,30 @@ class JumpTestData:
             mid_cols = int(ncols / 2)
             mid_rows = int(nrows / 2)
 
-            for n in range(ngroups):
-                if n == 1:
-                    dm.groupdq[0, n, 0:mid_rows, mid_cols:] = 4
-                if n == 24:
-                    dm.groupdq[0, n, mid_rows:, 0:mid_cols] = 4
-                if n == 48:
-                    dm.groupdq[0, n, mid_rows:, mid_cols:] = 4
+            if self.mode == 1:
+                for n in range(ngroups):
+                    if n == 1:
+                        dm.groupdq[0, n, 0:mid_rows, mid_cols:] = 4
+                    if n == 24:
+                        dm.groupdq[0, n, mid_rows:, 0:mid_cols] = 4
+                    if n == 48:
+                        dm.groupdq[0, n, mid_rows:, mid_cols:] = 4
+
+            elif self.mode == 2:
+                for n in range(ngroups):
+                    if n == 2:
+                        dm.groupdq[0, n, 0:mid_rows, 0:mid_cols] = 4
+                    if n == 3:
+                        dm.groupdq[0, n, 0:mid_rows, mid_cols:] = 4
+                    if n == 46:
+                        dm.groupdq[0, n, mid_rows:, 0:mid_cols] = 4
+                    if n == 47:
+                        dm.groupdq[0, n, mid_rows:, mid_cols:] = 4
+
+            elif self.mode == 2:
+                for n in range(ngroups):
+                    if n == 2:
+                        dm.groupdq[0, n, :, :] = 4
 
             dm.save(self.jump_file)
 
@@ -192,5 +219,5 @@ if __name__ == "__main__":
     parser = optparse.OptionParser(usage)
     (options,args) = parser.parse_args()
 
-    my_test_data = JumpTestData(noise=False)
+    my_test_data = JumpTestData(noise=False, mode=3)
     my_test_data.run()
