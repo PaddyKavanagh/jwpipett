@@ -1,27 +1,27 @@
-## plot_ramps.py
+# plot_ramps.py
 
 Tools to visualise ramps in a specified region of a MIRIRampModel file. 
 
 
-## Description
+# Description
 Takes a 4D ramp file and limits in the cols and rows dimensions and plots the ramps
 for each pixel.
 
 
-## Command Line
+# Command Line
 
-python plot_ramps.py <ramp file>
+python plot_ramps.py ramp_file.fits
 
 
-## Python Class
+# Python Class
 
-# Usage:
+## Usage:
 my_ramps = RampPlots(<ramp file>, xlim=[500, 600], ylim=[500, 600])
 my_ramps.plot_all()
 
 
-# Class
-class RampPlots():
+## Class
+### class RampPlots():
     """
     Make plots from the a ramp file.
 
@@ -38,11 +38,11 @@ class RampPlots():
 
     """
 
-# Methods:
-## plot_ramps
+## Methods:
+### plot_ramps
 	plot the ramp vectors for each pixel
 	
-plot_groupdq   
+### plot_groupdq   
     plot the groupdq vector for each pixel and the location of pixels flagged with jump/do_not_use
 
 plot_all
