@@ -10,15 +10,16 @@ for each pixel.
 
 # Command Line
 
-python plot_ramps.py ramp_file.fits
+`python plot_ramps.py ramp_file.fits`
 
 
 # Python Class
 
-## Usage:
-my_ramps = RampPlots(<ramp file>, xlim=[500, 600], ylim=[500, 600])
+## Usage
+```python
+my_ramps = RampPlots(ramp_file.fits, xlim=[500, 600], ylim=[500, 600])
 my_ramps.plot_all()
-
+```
 
 ## Class
 ### class RampPlots():
@@ -39,12 +40,12 @@ my_ramps.plot_all()
     """
 
 ## Methods:
-### plot_ramps
+### plot_ramps()
 	plot the ramp vectors for each pixel
 	
-### plot_groupdq   
+### plot_groupdq()   
     plot the groupdq vector for each pixel and the location of pixels flagged with jump/do_not_use
 
-plot_all
+### plot_all()
 	run all plotting methods
 	
