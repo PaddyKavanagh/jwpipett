@@ -5,7 +5,7 @@ Tools to visualise ramps in a specified region of a MIRIRampModel file.
 
 # Description
 Takes a 4D ramp file and limits in the cols and rows dimensions and plots the ramps
-for each pixel.
+and groupdq vectors for each pixel.
 
 
 # Command Line
